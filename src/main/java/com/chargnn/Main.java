@@ -17,7 +17,6 @@ public class Main{
 
     private Main(){
         display = new Display("Engine test", 500, 500);
-        core = new GameCore();
     }
 
     public static void main(String[] args){
@@ -35,6 +34,7 @@ public class Main{
 
         GL11.glViewport(0, 0, display.getWindowSize()[0], display.getWindowSize()[1]);
 
+        core = new GameCore();
         core.init();
 
         run();
