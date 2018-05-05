@@ -23,10 +23,12 @@ public class Shader {
 
         GL20.glLinkProgram(programID);
         GL20.glValidateProgram(programID);
+
+        bindUniforms();
     }
 
     private void bindUniforms(){
-
+        uniformHandler.addUniform("transformationMatrix");
     }
 
     public void bind(){
@@ -42,8 +44,6 @@ public class Shader {
 
         GL20.glShaderSource(shader, src);
         GL20.glCompileShader(shader);
-
-        bindUniforms();
 
         if(GL20.glGetShaderi(shader, GL20.GL_COMPILE_STATUS) == GL11.GL_FALSE){
             System.err.println("Error compiling shader : " + GL20.glGetShaderInfoLog(shader));

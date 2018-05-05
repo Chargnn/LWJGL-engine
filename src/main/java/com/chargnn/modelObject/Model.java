@@ -1,5 +1,9 @@
 package com.chargnn.modelObject;
 
+import com.chargnn.entityObject.Entity;
+import com.chargnn.shader.Shader;
+import com.chargnn.utils.Mathf;
+import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
@@ -46,27 +50,24 @@ public class Model {
         GL30.glBindVertexArray(0);
     }
 
-    public void render(){
+    public void render(Entity entity, Shader shader){
         if(!bindings.contains("vertices"))
             System.err.println("No vertices for id: [" + id + "]");
 
+        GL30.glBindVertexArray(vaoID);
+        GL20.glEnableVertexAttribArray(0);
+
+        Matrix4f transform = Mathf.createTransformationMatrix(entity);
+        shader.getUniformHandler().setUniformMat4("transformationMatrix", transform);
+
         if(bindings.contains("indices")) { // draw with indices
-            GL30.glBindVertexArray(vaoID);
-            GL20.glEnableVertexAttribArray(0);
-
             GL11.glDrawElements(GL11.GL_TRIANGLES, vertexCount, GL11.GL_UNSIGNED_INT, 0);
-
-            GL20.glDisableVertexAttribArray(0);
-            GL30.glBindVertexArray(0);
-        } else {                         // draw without indices
-            GL30.glBindVertexArray(vaoID);
-            GL20.glEnableVertexAttribArray(0);
-
+        } else {                           // draw without indices
             GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, vertexCount);
-
-            GL20.glDisableVertexAttribArray(0);
-            GL30.glBindVertexArray(0);
         }
+
+        GL20.glDisableVertexAttribArray(0);
+        GL30.glBindVertexArray(0);
     }
 
     private int createVaoID(){
