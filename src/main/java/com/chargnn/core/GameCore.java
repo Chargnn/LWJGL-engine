@@ -25,7 +25,7 @@ public class GameCore {
         model.pushVertices(vertices);
         model.pushIndices(indices);
     }
-
+    
     public void update(int delta){
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
         GL11.glClearColor(0, 0, 0, 1);
