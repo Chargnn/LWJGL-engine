@@ -37,7 +37,7 @@ public class GameCore {
 
         shader.bind();
 
-        entity.getModel().render(entity, shader);
+        entity.render(shader);
 
         shader.unbind();
     }

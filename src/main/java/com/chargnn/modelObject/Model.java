@@ -50,26 +50,6 @@ public class Model {
         GL30.glBindVertexArray(0);
     }
 
-    public void render(Entity entity, Shader shader){
-        if(!bindings.contains("vertices"))
-            System.err.println("No vertices for id: [" + id + "]");
-
-        GL30.glBindVertexArray(vaoID);
-        GL20.glEnableVertexAttribArray(0);
-
-        Matrix4f transform = Mathf.createTransformationMatrix(entity);
-        shader.getUniformHandler().setUniformMat4("transformationMatrix", transform);
-
-        if(bindings.contains("indices")) { // draw with indices
-            GL11.glDrawElements(GL11.GL_TRIANGLES, vertexCount, GL11.GL_UNSIGNED_INT, 0);
-        } else {                           // draw without indices
-            GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, vertexCount);
-        }
-
-        GL20.glDisableVertexAttribArray(0);
-        GL30.glBindVertexArray(0);
-    }
-
     private int createVaoID(){
         return GL30.glGenVertexArrays();
     }
@@ -91,5 +71,21 @@ public class Model {
 
         IntBuffer buffer = (IntBuffer) BufferUtils.createIntBuffer(data.length).put(data).flip();
         GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public int getVaoID() {
+        return vaoID;
+    }
+
+    public int getVertexCount() {
+        return vertexCount;
+    }
+
+    public List<String> getBindings() {
+        return bindings;
     }
 }
