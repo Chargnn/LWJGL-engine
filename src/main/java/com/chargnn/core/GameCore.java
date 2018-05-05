@@ -1,6 +1,7 @@
 package com.chargnn.core;
 
 import com.chargnn.modelObject.Model;
+import com.chargnn.shader.Shader;
 import org.lwjgl.opengl.GL11;
 
 public class GameCore {
@@ -18,6 +19,7 @@ public class GameCore {
     };
 
     private Model model = new Model("exemple");
+    private Shader shader = new Shader("res/shader/shader.vert", "res/shader/shader.frag");
 
     public void init(){
         model.pushVertices(vertices);
@@ -30,6 +32,11 @@ public class GameCore {
     }
 
     public void render(){
+
+        shader.bind();
+
         model.render();
+
+        shader.unbind();
     }
 }
