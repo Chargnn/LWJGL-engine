@@ -2,6 +2,7 @@ package com.chargnn.utils;
 
 import com.chargnn.entityObject.Entity;
 import org.joml.Matrix4f;
+import org.joml.Vector3f;
 
 public class Mathf {
 
@@ -33,6 +34,16 @@ public class Mathf {
         matrix.m32(-((2 * NEAR + FAR) / frustum_length));
         matrix.m33(0);
 
+        return matrix;
+    }
+
+    public static Matrix4f createViewMatrix(Entity entity) {
+        Matrix4f matrix = new Matrix4f().identity();
+        Vector3f cameraPos = entity.getPosition();
+        Vector3f negativeCameraPos = new Vector3f(-cameraPos.x,-cameraPos.y,-cameraPos.z);
+
+        matrix.rotateXYZ(entity.getRotation());
+        matrix.translate(negativeCameraPos);
         return matrix;
     }
 

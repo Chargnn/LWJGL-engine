@@ -30,6 +30,7 @@ public class Shader {
     private void bindUniforms(){
         uniformHandler.addUniform("transformationMatrix");
         uniformHandler.addUniform("projectionMatrix");
+        uniformHandler.addUniform("viewMatrix");
     }
 
     public void bind(){

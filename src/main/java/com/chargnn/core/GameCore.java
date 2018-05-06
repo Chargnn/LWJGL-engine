@@ -25,6 +25,7 @@ public class GameCore {
         RenderUtil.clearScreen(0, 0, 0, 0);
 
         entity.rotateEntity(0, (float ) 0.005 * delta, 0);
+        camera.update(delta);
     }
 
     public void render(){
