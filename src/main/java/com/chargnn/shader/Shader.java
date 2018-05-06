@@ -29,6 +29,7 @@ public class Shader {
 
     private void bindUniforms(){
         uniformHandler.addUniform("transformationMatrix");
+        uniformHandler.addUniform("projectionMatrix");
     }
 
     public void bind(){

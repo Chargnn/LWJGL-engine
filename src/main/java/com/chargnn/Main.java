@@ -12,7 +12,7 @@ public class Main{
     private int fps;
     private long lastFPS;
 
-    private Display display;
+    private static Display display;
     private GameCore core;
 
     private Main(){
@@ -75,5 +75,9 @@ public class Main{
             lastFPS += 1000;
         }
         fps++;
+    }
+
+    public static Display getDisplay(){
+        return display;
     }
 }
