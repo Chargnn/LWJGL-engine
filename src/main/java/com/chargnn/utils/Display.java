@@ -14,6 +14,7 @@ import static org.lwjgl.glfw.GLFW.*;
 public class Display {
 
     private long windowID;
+    private CallbackEvents callbackEvents;
 
     public boolean isCloseRequested(){
         return glfwWindowShouldClose(windowID);
@@ -38,7 +39,7 @@ public class Display {
         if(windowID == 0)
             throw new IllegalStateException("Failed to create the GLFW window");
 
-        setCallBacks();
+        callbackEvents = new CallbackEvents(windowID);
 
         // Get the thread stack and push a new frame
         try ( MemoryStack stack = MemoryStack.stackPush() ) {
@@ -57,7 +58,7 @@ public class Display {
                     (vidmode.width() - pWidth.get(0)) / 2,
                     (vidmode.height() - pHeight.get(0)) / 2
             );
-        } // the stack frame is popped automatically
+        }
 
 
         glfwMakeContextCurrent(windowID);
@@ -65,12 +66,6 @@ public class Display {
         glfwShowWindow(windowID);
     }
 
-    private void setCallBacks(){
-        glfwSetKeyCallback(windowID, (window, key, scancode, action, mods) -> {
-            if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE )
-                glfwSetWindowShouldClose(window, true); // We will detect this in the rendering loop
-        });
-    }
 
     public int[] getWindowSize(){
         int[] size = new int[2];
