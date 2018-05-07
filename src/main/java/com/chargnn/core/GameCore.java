@@ -15,7 +15,7 @@ public class GameCore {
     private Camera camera;
 
     public void init(){
-        entity = new EntityModel(LoadOBJ.loadOBJ("res/stall.obj", "res/test.png"), new Vector3f(0, 0, -1), new Vector3f(0, 0 ,0), new Vector3f(1, 1, 1));
+        entity = new EntityModel(LoadOBJ.loadOBJ("res/stall.obj", null), new Vector3f(0, 0, -1), new Vector3f(0, 0 ,0), new Vector3f(1, 1, 1));
         shader = new Shader("res/shader/shader.vert", "res/shader/shader.frag");
         camera = new Camera(new Vector3f(0, 0, 0), Main.getDisplay(), shader);
     }

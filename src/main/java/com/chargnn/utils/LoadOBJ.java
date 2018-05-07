@@ -60,9 +60,9 @@ public class LoadOBJ {
 
             while (line != null && line.startsWith("f ")) {
                 String[] currentLine = line.split(" ");
-                String[] vertex1 = currentLine[1].split("/");
-                String[] vertex2 = currentLine[2].split("/");
-                String[] vertex3 = currentLine[3].split("/");
+                String[] vertex1 = currentLine[1].split(" ");
+                String[] vertex2 = currentLine[2].split(" ");
+                String[] vertex3 = currentLine[3].split(" ");
 
                 processVertex(vertex1, indices, textures, normals, texturesArray, normalsArray);
                 processVertex(vertex2, indices, textures, normals, texturesArray, normalsArray);
@@ -105,12 +105,18 @@ public class LoadOBJ {
     {
         int currentVertexPointer = Integer.parseInt(vertexData[0]) -1;
         indices.add(currentVertexPointer);
-        Vector2f currentTex = textures.get(Integer.parseInt(vertexData[1])-1);
-        textureArray[currentVertexPointer*2] = currentTex.x;
-        textureArray[currentVertexPointer*2+1] = 1 - currentTex.y;
-        Vector3f currentNorm = normals.get(Integer.parseInt(vertexData[2])-1);
-        normalsArray[currentVertexPointer*3] = currentNorm.x;
-        normalsArray[currentVertexPointer*3+1] = currentNorm.y;
-        normalsArray[currentVertexPointer*3+2] = currentNorm.z;
+
+        if(textures.size() > 0) {
+            Vector2f currentTex = textures.get(Integer.parseInt(vertexData[1]) - 1);
+            textureArray[currentVertexPointer * 2] = currentTex.x;
+            textureArray[currentVertexPointer * 2 + 1] = 1 - currentTex.y;
+        }
+
+        if(normals.size() >0) {
+            Vector3f currentNorm = normals.get(Integer.parseInt(vertexData[2]) - 1);
+            normalsArray[currentVertexPointer * 3] = currentNorm.x;
+            normalsArray[currentVertexPointer * 3 + 1] = currentNorm.y;
+            normalsArray[currentVertexPointer * 3 + 2] = currentNorm.z;
+        }
     }
 }

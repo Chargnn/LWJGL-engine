@@ -9,5 +9,8 @@
         <module name="lwjgl-engine" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="lwjgl-engine" target="8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
