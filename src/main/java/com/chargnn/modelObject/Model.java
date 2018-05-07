@@ -1,9 +1,6 @@
 package com.chargnn.modelObject;
 
-import com.chargnn.entityObject.Entity;
-import com.chargnn.shader.Shader;
-import com.chargnn.utils.Mathf;
-import org.joml.Matrix4f;
+import com.chargnn.modelObject.texture.Texture;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
@@ -18,13 +15,15 @@ import java.util.List;
 public class Model {
 
     private String id;
+    private Texture texture;
     private int vaoID;
     private int vertexCount;
 
     private List<String> bindings = new ArrayList<>();
 
-    public Model(String id){
+    public Model(String id, Texture texture){
         this.id = id;
+        this.texture = texture;
         vaoID = createVaoID();
     }
 
@@ -46,6 +45,16 @@ public class Model {
 
         storeInVbo(indices);
         vertexCount = indices.length;
+
+        GL30.glBindVertexArray(0);
+    }
+
+    public void pushTextureCoords(float[] textureCoords){
+        bindings.add("textureCoords");
+
+        GL30.glBindVertexArray(vaoID);
+
+        storeInVbo(1, textureCoords, 2);
 
         GL30.glBindVertexArray(0);
     }
@@ -87,5 +96,9 @@ public class Model {
 
     public List<String> getBindings() {
         return bindings;
+    }
+
+    public Texture getTexture(){
+        return texture;
     }
 }

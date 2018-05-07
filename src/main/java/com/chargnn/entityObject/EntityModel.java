@@ -5,9 +5,10 @@ import com.chargnn.shader.Shader;
 import com.chargnn.utils.Mathf;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL20;
-import org.lwjgl.opengl.GL30;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL13.*;
+import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL30.*;
 
 public class EntityModel extends Entity {
 
@@ -22,20 +23,41 @@ public class EntityModel extends Entity {
         if(!model.getBindings().contains("vertices"))
             System.err.println("No vertices for id: [" + getModel().getId() + "]");
 
-        GL30.glBindVertexArray(getModel().getVaoID());
-        GL20.glEnableVertexAttribArray(0);
+        initVertexArray();
 
+        loadTransformationMatrix(shader);
+
+        draw();
+
+        closeVertexArray();
+    }
+
+    private void initVertexArray(){
+        glBindVertexArray(getModel().getVaoID());
+        glEnableVertexAttribArray(0);
+        glEnableVertexAttribArray(1);
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, getModel().getTexture().getTextureID());
+    }
+
+    private void loadTransformationMatrix(Shader shader){
         Matrix4f transform = Mathf.createTransformationMatrix(this);
         shader.getUniformHandler().setUniformMat4("transformationMatrix", transform);
+    }
 
+    private void draw(){
         if(model.getBindings().contains("indices")) { // draw with indices
-            GL11.glDrawElements(GL11.GL_TRIANGLES, model.getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
+            glDrawElements(GL_TRIANGLES, model.getVertexCount(), GL_UNSIGNED_INT, 0);
         } else {                           // draw without indices
-            GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, model.getVertexCount());
+            glDrawArrays(GL_TRIANGLES, 0, model.getVertexCount());
         }
+    }
 
-        GL20.glDisableVertexAttribArray(0);
-        GL30.glBindVertexArray(0);
+    private void closeVertexArray(){
+        glDisableVertexAttribArray(0);
+        glDisableVertexAttribArray(1);
+        glBindVertexArray(0);
     }
 
     public Model getModel(){return model;}
