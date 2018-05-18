@@ -5,7 +5,7 @@ import com.chargnn.entityObject.Camera;
 import com.chargnn.entityObject.EntityModel;
 import com.chargnn.shader.Shader;
 import com.chargnn.shader.light.Light;
-import com.chargnn.utils.LoadOBJ;
+import com.chargnn.utils.readers.LoadOBJ;
 import com.chargnn.utils.RenderUtil;
 import org.joml.Vector3f;
 

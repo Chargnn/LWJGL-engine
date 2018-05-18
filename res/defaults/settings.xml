@@ -1,0 +1,9 @@
+<Settings>
+    <Display>
+        <Size>
+            <Width>500</Width>
+            <Height>500</Height>
+        </Size>
+        <Title>LWJGL Engine</Title>
+    </Display>
+</Settings>

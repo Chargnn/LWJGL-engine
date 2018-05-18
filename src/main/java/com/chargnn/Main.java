@@ -2,9 +2,16 @@ package com.chargnn;
 
 import com.chargnn.core.GameCore;
 import com.chargnn.utils.Display;
+import com.chargnn.utils.SettingsManager;
 import com.chargnn.utils.Time;
+import com.grack.nanojson.JsonParserException;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
+import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 
 public class Main{
     private long lastFrame;
@@ -13,12 +20,14 @@ public class Main{
 
     private static Display display;
     private GameCore core;
+    private SettingsManager settingsManager;
 
-    private Main(){
-        display = new Display("Engine test", 600, 500);
+    private Main() throws JsonParserException, IOException, ParserConfigurationException, SAXException {
+        settingsManager = new SettingsManager("res/defaults/settings.xml");
+        display = new Display(settingsManager.getElementsByTagName("Title"), settingsManager.getElementsByTagNameI("Width"), settingsManager.getElementsByTagNameI("Height"));
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws JsonParserException, IOException, ParserConfigurationException, SAXException {
         Main main = new Main();
 
         main.initGL();

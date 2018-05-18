@@ -1,4 +1,4 @@
-package com.chargnn.utils;
+package com.chargnn.utils.readers;
 
 import com.chargnn.modelObject.Model;
 import com.chargnn.modelObject.texture.Texture;
