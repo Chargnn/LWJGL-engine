@@ -7,14 +7,16 @@ public class Light {
 
     private Vector3f position;
     private Vector3f color;
+    private Shader shader;
     private boolean isStatic = false;
 
-    public Light(Vector3f position, Vector3f color){
+    public Light(Vector3f position, Vector3f color, Shader shader){
         this.position = position;
         this.color = color;
+        this.shader = shader;
     }
 
-    public void render(Shader shader){
+    public void render(){
         if(!isStatic) {
             shader.getUniformHandler().setUniform3f("lightPosition", position);
             shader.getUniformHandler().setUniform3f("lightColor", color);
@@ -22,6 +24,13 @@ public class Light {
     }
 
     public void setStatic(){
+        shader.bind();
+
+        shader.getUniformHandler().setUniform3f("lightPosition", position);
+        shader.getUniformHandler().setUniform3f("lightColor", color);
+
+        shader.unbind();
+
         isStatic = true;
     }
 

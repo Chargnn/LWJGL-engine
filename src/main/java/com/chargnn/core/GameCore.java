@@ -20,7 +20,9 @@ public class GameCore {
         entity = new EntityModel(LoadOBJ.loadOBJ("res/stall.obj", null), new Vector3f(0, 0, -1), new Vector3f(0, 0 ,0), new Vector3f(1, 1, 1));
         shader = new Shader("res/shader/shader.vert", "res/shader/shader.frag");
         camera = new Camera(new Vector3f(0, 0, 0), Main.getDisplay(), shader);
-        light = new Light(new Vector3f(0, -10, 0), new Vector3f(1, 1, 1));
+        light = new Light(new Vector3f(0, -10, 0), new Vector3f(1, 1, 1), shader);
+
+        light.setStatic();
     }
 
     public void update(int delta){
@@ -39,7 +41,7 @@ public class GameCore {
         shader.bind();
 
         entity.render(shader);
-        light.render(shader);
+        light.render();
 
         shader.unbind();
     }
