@@ -81,13 +81,8 @@ public class Display {
         return size;
     }
 
-    public void setVSync(int bool) {
-        if(bool >= 1)
-            bool = 1;
-        else if (bool <= 0)
-            bool = 0;
-
-        glfwSwapInterval(bool);
+    public void setVSync(boolean bool) {
+        glfwSwapInterval(bool ? 1 : 0);
     }
 
     public long getWindowID() {

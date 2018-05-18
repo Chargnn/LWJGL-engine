@@ -1,9 +1,7 @@
 package com.chargnn.utils;
 
-import org.lwjgl.opengl.GL11;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -11,8 +9,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class SettingsManager {
 
@@ -31,17 +27,6 @@ public class SettingsManager {
         return builder.parse(path);
     }
 
-    public Integer getElementsByTagNameI(String name) throws IOException, SAXException, ParserConfigurationException {
-        NodeList elements = parse().getElementsByTagName(name);
-
-        for(int i = 0; i < elements.getLength(); i++){
-            Element tag = (Element) elements.item(i);
-            return Integer.parseInt(tag.getFirstChild().getNodeValue());
-        }
-
-        return null;
-    }
-
     public String getElementsByTagName(String name) throws IOException, SAXException, ParserConfigurationException {
         NodeList elements = parse().getElementsByTagName(name);
 
@@ -51,6 +36,14 @@ public class SettingsManager {
         }
 
         return null;
+    }
+
+    public Integer getElementsByTagNameI(String name) throws IOException, SAXException, ParserConfigurationException {
+        return Integer.parseInt(getElementsByTagName(name));
+    }
+
+    public Boolean getElementsByTagNameBool(String name) throws IOException, SAXException, ParserConfigurationException {
+        return Boolean.parseBoolean(getElementsByTagName(name));
     }
 
 }

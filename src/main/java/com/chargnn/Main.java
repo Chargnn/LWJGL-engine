@@ -7,7 +7,6 @@ import com.chargnn.utils.Time;
 import com.grack.nanojson.JsonParserException;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
-import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -22,9 +21,10 @@ public class Main{
     private GameCore core;
     private SettingsManager settingsManager;
 
-    private Main() throws JsonParserException, IOException, ParserConfigurationException, SAXException {
+    private Main() throws IOException, ParserConfigurationException, SAXException {
         settingsManager = new SettingsManager("res/defaults/settings.xml");
         display = new Display(settingsManager.getElementsByTagName("Title"), settingsManager.getElementsByTagNameI("Width"), settingsManager.getElementsByTagNameI("Height"));
+        display.setVSync(settingsManager.getElementsByTagNameBool("Vsync"));
     }
 
     public static void main(String[] args) throws JsonParserException, IOException, ParserConfigurationException, SAXException {
