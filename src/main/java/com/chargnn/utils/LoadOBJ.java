@@ -25,9 +25,9 @@ public class LoadOBJ {
         List<Vector3f> normals = new ArrayList<>();
         List<Integer> indices = new ArrayList<>();
         float[] verticesArray;
-        float[] normalsArray;
+        float[] normalsArray = null;
         float[] texturesArray = null;
-        int[] indicesArray ;
+        int[] indicesArray;
 
         try
         {
@@ -60,9 +60,9 @@ public class LoadOBJ {
 
             while (line != null && line.startsWith("f ")) {
                 String[] currentLine = line.split(" ");
-                String[] vertex1 = currentLine[1].split(" ");
-                String[] vertex2 = currentLine[2].split(" ");
-                String[] vertex3 = currentLine[3].split(" ");
+                String[] vertex1 = currentLine[1].split("/");
+                String[] vertex2 = currentLine[2].split("/");
+                String[] vertex3 = currentLine[3].split("/");
 
                 processVertex(vertex1, indices, textures, normals, texturesArray, normalsArray);
                 processVertex(vertex2, indices, textures, normals, texturesArray, normalsArray);
@@ -93,10 +93,22 @@ public class LoadOBJ {
             indicesArray[i] = indices.get(i);
 
         }
-        Model model =  new Model("path", Texture.loadTexture(materialPath));
-        model.pushVertices(verticesArray);
-        model.pushTextureCoords(texturesArray);
-        model.pushIndices(indicesArray);
+        Model model =  new Model(fileName, Texture.loadTexture(materialPath));
+
+        if(verticesArray.length > 0) {
+            model.pushVertices(verticesArray);
+        }
+        if(texturesArray.length > 0) {
+            model.pushTextureCoords(texturesArray);
+        }
+        if(indicesArray.length > 0) {
+            model.pushIndices(indicesArray);
+        }
+        if(normalsArray.length > 0) {
+            model.pushNormals(normalsArray);
+        } else {
+            System.err.println("Model with id [" + model.getId() + "] has no normals and might not render with proper lightning");
+        }
 
         return model;
     }
@@ -112,7 +124,7 @@ public class LoadOBJ {
             textureArray[currentVertexPointer * 2 + 1] = 1 - currentTex.y;
         }
 
-        if(normals.size() >0) {
+        if(normals.size() > 0) {
             Vector3f currentNorm = normals.get(Integer.parseInt(vertexData[2]) - 1);
             normalsArray[currentVertexPointer * 3] = currentNorm.x;
             normalsArray[currentVertexPointer * 3 + 1] = currentNorm.y;

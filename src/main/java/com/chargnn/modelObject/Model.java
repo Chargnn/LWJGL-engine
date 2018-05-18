@@ -59,6 +59,16 @@ public class Model {
         GL30.glBindVertexArray(0);
     }
 
+    public void pushNormals(float[] normals){
+        bindings.add("normals");
+
+        GL30.glBindVertexArray(vaoID);
+
+        storeInVbo(2, normals, 3);
+
+        GL30.glBindVertexArray(0);
+    }
+
     private int createVaoID(){
         return GL30.glGenVertexArrays();
     }

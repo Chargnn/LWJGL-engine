@@ -19,6 +19,10 @@ public class Camera extends Entity{
         super(position, new Vector3f().zero(), new Vector3f().zero());
         this.shader = shader;
 
+        setProjectionMatrix(display);
+    }
+
+    public void setProjectionMatrix(Display display){
         projectionMatrix = Mathf.createProjectionMatrix(this, display);
         shader.bind();
 

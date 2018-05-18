@@ -5,7 +5,6 @@ import com.chargnn.utils.Display;
 import com.chargnn.utils.Time;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
-import org.lwjgl.opengl.GL11;
 
 public class Main{
     private long lastFrame;
@@ -16,7 +15,7 @@ public class Main{
     private GameCore core;
 
     private Main(){
-        display = new Display("Engine test", 500, 500);
+        display = new Display("Engine test", 600, 500);
     }
 
     public static void main(String[] args){
@@ -31,8 +30,6 @@ public class Main{
         lastFPS = Time.getTime();
 
         GL.createCapabilities();
-
-        GL11.glViewport(0, 0, display.getWindowSize()[0], display.getWindowSize()[1]);
 
         core = new GameCore();
         core.init();

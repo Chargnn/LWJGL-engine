@@ -15,6 +15,7 @@ public class Display {
 
     private long windowID;
     private CallbackEvents callbackEvents;
+    private boolean hasResized;
 
     public boolean isCloseRequested(){
         return glfwWindowShouldClose(windowID);
@@ -41,8 +42,6 @@ public class Display {
         if(windowID == 0)
             throw new IllegalStateException("Failed to create the GLFW window");
 
-        callbackEvents = new CallbackEvents(windowID);
-
         // Get the thread stack and push a new frame
         try ( MemoryStack stack = MemoryStack.stackPush() ) {
             IntBuffer pWidth = stack.mallocInt(1); // int*
@@ -66,6 +65,7 @@ public class Display {
         glfwMakeContextCurrent(windowID);
         glfwSwapInterval(1);
         glfwShowWindow(windowID);
+        callbackEvents = new CallbackEvents(this);
     }
 
 
@@ -92,5 +92,13 @@ public class Display {
 
     public long getWindowID() {
         return windowID;
+    }
+
+    public boolean hasResized(){
+        return hasResized;
+    }
+
+    public void setHasResized(boolean bool){
+        hasResized = bool;
     }
 }

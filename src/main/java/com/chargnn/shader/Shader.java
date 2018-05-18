@@ -28,9 +28,14 @@ public class Shader {
     }
 
     private void bindUniforms(){
+        // camera
         uniformHandler.addUniform("transformationMatrix");
         uniformHandler.addUniform("projectionMatrix");
         uniformHandler.addUniform("viewMatrix");
+
+        // light
+        uniformHandler.addUniform("lightPosition");
+        uniformHandler.addUniform("lightColor");
     }
 
     public void bind(){

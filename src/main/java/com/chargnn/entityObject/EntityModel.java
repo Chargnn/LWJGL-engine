@@ -36,6 +36,7 @@ public class EntityModel extends Entity {
         glBindVertexArray(getModel().getVaoID());
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
+        glEnableVertexAttribArray(2);
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, getModel().getTexture().getTextureID());
@@ -57,6 +58,7 @@ public class EntityModel extends Entity {
     private void closeVertexArray(){
         glDisableVertexAttribArray(0);
         glDisableVertexAttribArray(1);
+        glDisableVertexAttribArray(2);
         glBindVertexArray(0);
     }
 
