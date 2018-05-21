@@ -1,8 +1,11 @@
 package com.chargnn.shader;
 
+import com.chargnn.utils.readers.SettingsManager;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 
 public class Shader {
@@ -10,7 +13,7 @@ public class Shader {
     private int programID;
     private UniformHandler uniformHandler;
 
-    public Shader(String vertexShader, String fragmentShader) {
+    public Shader(String vertexShader, String fragmentShader) throws IOException, SAXException, ParserConfigurationException {
         programID = GL20.glCreateProgram();
         uniformHandler = new UniformHandler(this);
 
@@ -27,13 +30,12 @@ public class Shader {
         bindUniforms();
     }
 
-    private void bindUniforms(){
+    private void bindUniforms() throws ParserConfigurationException, SAXException, IOException {
         // camera
         uniformHandler.addUniform("transformationMatrix");
         uniformHandler.addUniform("projectionMatrix");
         uniformHandler.addUniform("viewMatrix");
 
-        // light
         uniformHandler.addUniform("lightPosition");
         uniformHandler.addUniform("lightColor");
     }

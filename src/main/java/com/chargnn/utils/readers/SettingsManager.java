@@ -1,4 +1,4 @@
-package com.chargnn.utils;
+package com.chargnn.utils.readers;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -12,22 +12,19 @@ import java.io.IOException;
 
 public class SettingsManager {
 
-    private DocumentBuilderFactory factory;
-    private String path;
+    public static final String DEFAULTS_SETTINGS = "res/defaults/settings.xml";
 
-    public SettingsManager(String path) {
-        this.path = path;
+    private static DocumentBuilderFactory factory;
+    private static String path = DEFAULTS_SETTINGS;
 
+    private static Document parse() throws ParserConfigurationException, IOException, SAXException {
         factory = DocumentBuilderFactory.newInstance();
-    }
-
-    public Document parse() throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilder builder = factory.newDocumentBuilder();
 
         return builder.parse(path);
     }
 
-    public String getElementsByTagName(String name) throws IOException, SAXException, ParserConfigurationException {
+    public static String getElementsByTagName(String name) throws IOException, SAXException, ParserConfigurationException {
         NodeList elements = parse().getElementsByTagName(name);
 
         for(int i = 0; i < elements.getLength(); i++){
@@ -38,12 +35,16 @@ public class SettingsManager {
         return null;
     }
 
-    public Integer getElementsByTagNameI(String name) throws IOException, SAXException, ParserConfigurationException {
+    public static Integer getElementsByTagNameI(String name) throws IOException, SAXException, ParserConfigurationException {
         return Integer.parseInt(getElementsByTagName(name));
     }
 
-    public Boolean getElementsByTagNameBool(String name) throws IOException, SAXException, ParserConfigurationException {
+    public static Boolean getElementsByTagNameBool(String name) throws IOException, SAXException, ParserConfigurationException {
         return Boolean.parseBoolean(getElementsByTagName(name));
+    }
+
+    public static void setPath(String p){
+        path = p;
     }
 
 }

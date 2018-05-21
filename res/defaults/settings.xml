@@ -1,10 +1,13 @@
 <Settings>
     <Display>
         <Size>
-            <Width>500</Width>
-            <Height>500</Height>
+            <Width>960</Width>
+            <Height>540</Height>
         </Size>
         <Title>LWJGL Engine</Title>
         <Vsync>true</Vsync>
     </Display>
+    <Performance>
+        <MaxLightCount>8</MaxLightCount>
+    </Performance>
 </Settings>

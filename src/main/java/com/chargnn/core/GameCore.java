@@ -8,7 +8,10 @@ import com.chargnn.shader.light.Light;
 import com.chargnn.utils.readers.LoadOBJ;
 import com.chargnn.utils.RenderUtil;
 import org.joml.Vector3f;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 public class GameCore {
 
     private EntityModel entity;
@@ -16,13 +19,11 @@ public class GameCore {
     private Camera camera;
     private Light light;
 
-    public void init(){
+    public void init() throws ParserConfigurationException, SAXException, IOException {
         entity = new EntityModel(LoadOBJ.loadOBJ("res/stall.obj", null), new Vector3f(0, 0, -1), new Vector3f(0, 0 ,0), new Vector3f(1, 1, 1));
         shader = new Shader("res/shader/shader.vert", "res/shader/shader.frag");
         camera = new Camera(new Vector3f(0, 0, 0), Main.getDisplay(), shader);
         light = new Light(new Vector3f(0, -10, 0), new Vector3f(1, 1, 1), shader);
-
-        light.setStatic();
     }
 
     public void update(int delta){
@@ -37,7 +38,7 @@ public class GameCore {
         camera.update(delta);
     }
 
-    public void render(){
+    public void render() {
         shader.bind();
 
         entity.render(shader);

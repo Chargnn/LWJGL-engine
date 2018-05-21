@@ -2,9 +2,8 @@ package com.chargnn;
 
 import com.chargnn.core.GameCore;
 import com.chargnn.utils.Display;
-import com.chargnn.utils.SettingsManager;
+import com.chargnn.utils.readers.SettingsManager;
 import com.chargnn.utils.Time;
-import com.grack.nanojson.JsonParserException;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 import org.xml.sax.SAXException;
@@ -19,21 +18,19 @@ public class Main{
 
     private static Display display;
     private GameCore core;
-    private SettingsManager settingsManager;
 
     private Main() throws IOException, ParserConfigurationException, SAXException {
-        settingsManager = new SettingsManager("res/defaults/settings.xml");
-        display = new Display(settingsManager.getElementsByTagName("Title"), settingsManager.getElementsByTagNameI("Width"), settingsManager.getElementsByTagNameI("Height"));
-        display.setVSync(settingsManager.getElementsByTagNameBool("Vsync"));
+        display = new Display(SettingsManager.getElementsByTagName("Title"), SettingsManager.getElementsByTagNameI("Width"), SettingsManager.getElementsByTagNameI("Height"));
+        display.setVSync(SettingsManager.getElementsByTagNameBool("Vsync"));
     }
 
-    public static void main(String[] args) throws JsonParserException, IOException, ParserConfigurationException, SAXException {
+    public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
         Main main = new Main();
 
         main.initGL();
     }
 
-    private void initGL(){
+    private void initGL() throws IOException, SAXException, ParserConfigurationException {
         Time.getDelta(lastFrame);
         lastFrame = Time.getTime();
         lastFPS = Time.getTime();
@@ -46,7 +43,7 @@ public class Main{
         run();
     }
 
-    public void run(){
+    public void run() throws IOException, SAXException, ParserConfigurationException {
         while(!display.isCloseRequested()){
             int delta = Time.getDelta(lastFrame);
             lastFrame = Time.getTime();
@@ -65,7 +62,7 @@ public class Main{
         updateFPS();
     }
 
-    private void render(){
+    private void render() throws ParserConfigurationException, SAXException, IOException {
         core.render();
         GLFW.glfwSwapBuffers(display.getWindowID());
     }

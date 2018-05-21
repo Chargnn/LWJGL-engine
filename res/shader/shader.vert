@@ -17,11 +17,13 @@ uniform mat4 viewMatrix;
 uniform vec3 lightPosition;
 
 void main(void){
-    vec4 worldVertices = transformationMatrix * vec4(vertices, 1.0);
+    vec4 worldPosition = transformationMatrix * vec4(vertices,1.0);
+    vec4 positionRelativeToCam = viewMatrix * worldPosition;
 
-    gl_Position = projectionMatrix * viewMatrix * worldVertices;
+    gl_Position = projectionMatrix * positionRelativeToCam;
     out_textureCoords = textureCoords;
 
     surfaceNormal = (transformationMatrix * vec4(normals, 0.0)).xyz;
-    toLightVector = lightPosition - worldVertices.xyz;
+
+    toLightVector = lightPosition - worldPosition.xyz;
 }

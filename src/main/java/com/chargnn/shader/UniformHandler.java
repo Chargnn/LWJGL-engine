@@ -1,12 +1,18 @@
 package com.chargnn.shader;
 
+import com.chargnn.shader.light.Light;
+import com.chargnn.utils.readers.SettingsManager;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL20;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.util.HashMap;
+import java.util.List;
 
 public class UniformHandler {
 
